@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CEEE08942A975ECC003155CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE08932A975ECC003155CA /* AppDelegate.swift */; };
-		CEEE08962A975ECC003155CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE08952A975ECC003155CA /* SceneDelegate.swift */; };
 		CEEE08982A975ECC003155CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEE08972A975ECC003155CA /* ViewController.swift */; };
-		CEEE089B2A975ECC003155CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEEE08992A975ECC003155CA /* Main.storyboard */; };
 		CEEE089D2A975ECD003155CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEEE089C2A975ECD003155CA /* Assets.xcassets */; };
 		CEEE08A02A975ECD003155CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEEE089E2A975ECD003155CA /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,9 +16,7 @@
 /* Begin PBXFileReference section */
 		CEEE08902A975ECC003155CA /* Reverse Polish notation calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reverse Polish notation calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEE08932A975ECC003155CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CEEE08952A975ECC003155CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		CEEE08972A975ECC003155CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CEEE089A2A975ECC003155CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CEEE089C2A975ECD003155CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEEE089F2A975ECD003155CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEEE08A12A975ECD003155CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,9 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				CEEE08932A975ECC003155CA /* AppDelegate.swift */,
-				CEEE08952A975ECC003155CA /* SceneDelegate.swift */,
 				CEEE08972A975ECC003155CA /* ViewController.swift */,
-				CEEE08992A975ECC003155CA /* Main.storyboard */,
 				CEEE089C2A975ECD003155CA /* Assets.xcassets */,
 				CEEE089E2A975ECD003155CA /* LaunchScreen.storyboard */,
 				CEEE08A12A975ECD003155CA /* Info.plist */,
@@ -127,7 +121,6 @@
 			files = (
 				CEEE08A02A975ECD003155CA /* LaunchScreen.storyboard in Resources */,
 				CEEE089D2A975ECD003155CA /* Assets.xcassets in Resources */,
-				CEEE089B2A975ECC003155CA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,21 +133,12 @@
 			files = (
 				CEEE08982A975ECC003155CA /* ViewController.swift in Sources */,
 				CEEE08942A975ECC003155CA /* AppDelegate.swift in Sources */,
-				CEEE08962A975ECC003155CA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CEEE08992A975ECC003155CA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CEEE089A2A975ECC003155CA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CEEE089E2A975ECD003155CA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +276,6 @@
 				INFOPLIST_FILE = "Reverse Polish notation calculator/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +303,6 @@
 				INFOPLIST_FILE = "Reverse Polish notation calculator/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
