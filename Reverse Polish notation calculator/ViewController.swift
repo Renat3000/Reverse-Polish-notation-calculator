@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupButtonActions()
     }
     
     func setupViews() {
@@ -59,6 +60,35 @@ class ViewController: UIViewController {
         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    func setupButtonActions() {
+        cView.buttonAC.addTarget(self, action: #selector(ViewController.numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonOpeningBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonClosingBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonSign.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonPercentage.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonDivision.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        
+        cView.buttonMultiplication.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button7.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button8.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button9.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        
+        cView.button4.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button5.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button6.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonMinus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+
+        cView.button1.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button2.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button3.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonPlus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        
+        cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.button0.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonEquals.addTarget(self, action: #selector(calcButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonBackspace.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
     }
     
     private var calculator = CalculatorLogic()
@@ -113,7 +143,12 @@ class ViewController: UIViewController {
                 } else if cView.outputField.text == "0" || isFinishedTypingNumber {
                     cView.outputField.text = numValue
                     isFinishedTypingNumber = false
+                }  else if numValue == "AC" {
+                    cView.outputField.text = " "
+                    displayValue = Double(0)
+                    isFinishedTypingNumber = false
                 } else {
+                    print (isFinishedTypingNumber)
                     cView.outputField.text?.append(numValue)
                 }
             }

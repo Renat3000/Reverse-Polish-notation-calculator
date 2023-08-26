@@ -10,6 +10,7 @@ import UIKit
 class CalculatorView: UIView {
     
     var outputField: UILabel
+    var buttonAC, buttonOpeningBracket, buttonClosingBracket, buttonSign, buttonPercentage, buttonDivision, buttonMultiplication, buttonPlus, buttonMinus, buttonComma, buttonEquals, buttonBackspace, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9: UIButton!
     
     init() {
         outputField = createLabel()
@@ -28,20 +29,13 @@ class CalculatorView: UIView {
         outputField.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         let zeroStack = createStackView()
-        let buttonAC = makeButton(withText: "AC")
-        let buttonOpeningBracket = makeButton(withText: "(")
-        let buttonClosingBracket = makeButton(withText: ")")
-        let buttonSign = makeButton(withText: "±")
-        let buttonPercentage = makeButton(withText: "%")
-        let buttonDivision = makeButton(withText: "÷")
-        
-        buttonAC.addTarget(self, action: #selector(ViewController.calcButtonPressed(_:)), for: .touchUpInside)
+        buttonAC = makeButton(withText: "AC")
         buttonAC.titleLabel?.adjustsFontSizeToFitWidth = true
-//        buttonOpeningBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonClosingBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonSign.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonPercentage.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonDivision.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        buttonOpeningBracket = makeButton(withText: "(")
+        buttonClosingBracket = makeButton(withText: ")")
+        buttonSign = makeButton(withText: "±")
+        buttonPercentage = makeButton(withText: "%")
+        buttonDivision = makeButton(withText: "÷")
         
         zeroStack.addArrangedSubview(buttonAC)
         zeroStack.addArrangedSubview(buttonOpeningBracket)
@@ -56,15 +50,10 @@ class CalculatorView: UIView {
         zeroStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         let firstStack = createStackView()
-        let button7 = makeButton(withText: "7")
-        let button8 = makeButton(withText: "8")
-        let button9 = makeButton(withText: "9")
-        let buttonMultiplication = makeButton(withText: "×")
-        
-//        button7.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button8.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button9.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonMultiplication.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        button7 = makeButton(withText: "7")
+        button8 = makeButton(withText: "8")
+        button9 = makeButton(withText: "9")
+        buttonMultiplication = makeButton(withText: "×")
         
         firstStack.addArrangedSubview(button7)
         firstStack.addArrangedSubview(button8)
@@ -77,15 +66,10 @@ class CalculatorView: UIView {
         firstStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         let secondStack = createStackView()
-        let button4 = makeButton(withText: "4")
-        let button5 = makeButton(withText: "5")
-        let button6 = makeButton(withText: "6")
-        let buttonMinus = makeButton(withText: "-")
-        
-//        button4.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button5.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button6.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonMinus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        button4 = makeButton(withText: "4")
+        button5 = makeButton(withText: "5")
+        button6 = makeButton(withText: "6")
+        buttonMinus = makeButton(withText: "-")
         
         secondStack.addArrangedSubview(button4)
         secondStack.addArrangedSubview(button5)
@@ -98,15 +82,10 @@ class CalculatorView: UIView {
         secondStack.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
         let thirdStack = createStackView()
-        let button1 = makeButton(withText: "1")
-        let button2 = makeButton(withText: "2")
-        let button3 = makeButton(withText: "3")
-        let buttonPlus = makeButton(withText: "+")
-        
-//        button1.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button2.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button3.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonPlus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        button1 = makeButton(withText: "1")
+        button2 = makeButton(withText: "2")
+        button3 = makeButton(withText: "3")
+        buttonPlus = makeButton(withText: "+")
         
         thirdStack.addArrangedSubview(button1)
         thirdStack.addArrangedSubview(button2)
@@ -120,15 +99,10 @@ class CalculatorView: UIView {
         
         let fourthStack = createStackView()
         
-        let buttonComma = makeButton(withText: ".")
-        let button0 = makeButton(withText: "0")
-        let buttonEquals = makeButton(withText: "=")
-        let buttonBackspace = makeButton(withText: "←")
-        
-//        buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        button0.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-//        buttonEquals.addTarget(self, action: #selector(calcButtonPressed(_:)), for: .touchUpInside)
-//        buttonBackspace.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        buttonComma = makeButton(withText: ".")
+        button0 = makeButton(withText: "0")
+        buttonEquals = makeButton(withText: "=")
+        buttonBackspace = makeButton(withText: "←")
         
         fourthStack.addArrangedSubview(button0)
         fourthStack.addArrangedSubview(buttonComma)
