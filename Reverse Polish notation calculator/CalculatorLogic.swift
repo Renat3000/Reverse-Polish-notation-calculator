@@ -63,23 +63,12 @@ struct CalculatorLogic {
     mutating func calculate(numbersStack: [String], operationsStack: [String]) -> Double {
         var numbersStack = numbersStack // Create a mutable copy
         var operationsStack = operationsStack // Create a mutable copy
-        var result: Double = 0 // Initialize result with a default value
-                
+        var result = Double(numbersStack.removeFirst()) ?? 0 // Initialize result with a default value
         while !numbersStack.isEmpty {
-            if numbersStack.count > 1 {
-                if let firstNumber = Double(numbersStack.removeFirst()) {
-                    let operation = operationsStack.removeFirst()
-                    currentCalculation = IntermediateCalculation(firstNumber: firstNumber, operation: operation)
-                    if let secondNumber = Double(numbersStack.removeFirst()) {
-                        result = performTwoNumbersOperation(secondNumber: secondNumber)
-                    }
-                }
-            } else {
                 let operation = operationsStack.removeFirst()
                 currentCalculation = IntermediateCalculation(firstNumber: result, operation: operation)
                 if let secondNumber = Double(numbersStack.removeFirst()) {
                     result = performTwoNumbersOperation(secondNumber: secondNumber)
-                }
             }
         }
         
