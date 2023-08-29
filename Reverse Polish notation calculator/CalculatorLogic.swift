@@ -33,10 +33,6 @@ struct CalculatorLogic {
         print(numbersStack)
         print(operationsStack)
         operationsStack.removeLast() // delete the "="
-        numbersStack.reverse()
-        operationsStack.reverse()
-        print("reversed:", numbersStack)
-        print("reversed:", operationsStack)
         theResult = calculate(numbersStack: numbersStack, operationsStack: operationsStack)
         numbersStack.removeAll()
         operationsStack.removeAll()
@@ -71,17 +67,17 @@ struct CalculatorLogic {
                 
         while !numbersStack.isEmpty {
             if numbersStack.count > 1 {
-                if let firstNumber = Double(numbersStack.removeLast()) {
-                    let operation = operationsStack.removeLast()
+                if let firstNumber = Double(numbersStack.removeFirst()) {
+                    let operation = operationsStack.removeFirst()
                     currentCalculation = IntermediateCalculation(firstNumber: firstNumber, operation: operation)
-                    if let secondNumber = Double(numbersStack.removeLast()) {
+                    if let secondNumber = Double(numbersStack.removeFirst()) {
                         result = performTwoNumbersOperation(secondNumber: secondNumber)
                     }
                 }
             } else {
-                let operation = operationsStack.removeLast()
+                let operation = operationsStack.removeFirst()
                 currentCalculation = IntermediateCalculation(firstNumber: result, operation: operation)
-                if let secondNumber = Double(numbersStack.removeLast()) {
+                if let secondNumber = Double(numbersStack.removeFirst()) {
                     result = performTwoNumbersOperation(secondNumber: secondNumber)
                 }
             }
