@@ -8,17 +8,86 @@
 import Foundation
 
 struct CalculatorLogic {
-    var number: Double?
-    var numbersStack = stackForNumbers ()
-    var operationsStack = stackForOperations ()
-    
-    mutating func setNumber(_ number: Double) {
-        self.number = number
+    var inputline: String?
+//    var numbersStack = stackForNumbers()
+//    var operationsStack = stackForOperations()
+    var numbersStack = [String]()
+    var operationsStack = [String]()
+    var operations = "+-×÷="
+    var prioritiesDictionary: [String:Int] = ["+":1,"-":1,"×":2,"÷":2]
+    var currentNumber = ""
+    var theResult: Double?
+
+    mutating func setline(_ inputline: String) {
+        self.inputline = inputline
+        print("tis nothing but a \(inputline)")
+        for char in inputline {
+                if !operations.contains(char) {
+                    currentNumber.append(char)
+                } else {
+                    numbersStack.append(currentNumber)
+                    currentNumber = ""
+                    operationsStack.append(String(char))
+                }
+            }
+        print(numbersStack)
+        print(operationsStack)
+        operationsStack.removeLast() // delete the "="
+        numbersStack.reverse()
+        operationsStack.reverse()
+        print("reversed:", numbersStack)
+        print("reversed:", operationsStack)
+        theResult = calculate(numbersStack: numbersStack, operationsStack: operationsStack)
+        numbersStack.removeAll()
+        operationsStack.removeAll()
     }
     
-    mutating func calculate(symbol: String) -> Double? {
-        var prioritiesDictionary: [String:Int] = ["+":1,"-":1,"×":2,"÷":2]
-            return nil
+    struct IntermediateCalculation {
+        let firstNumber: Double
+        let operation: String
+    }
+    var currentCalculation: IntermediateCalculation?
+    
+    mutating func performTwoNumbersOperation(secondNumber: Double) -> Double {
+        if let calculation = currentCalculation {
+            let firstNumber = calculation.firstNumber
+            let operation = calculation.operation
+            
+            switch operation {
+            case "+": return firstNumber + secondNumber
+            case "-": return firstNumber - secondNumber
+            case "×": return firstNumber * secondNumber
+            case "÷": return firstNumber / secondNumber
+            default: fatalError("Invalid operation: \(operation)")
+            }
+        }
+        return 0
     }
     
+    mutating func calculate(numbersStack: [String], operationsStack: [String]) -> Double {
+        var numbersStack = numbersStack // Create a mutable copy
+        var operationsStack = operationsStack // Create a mutable copy
+        var result: Double = 0 // Initialize result with a default value
+                
+        while !numbersStack.isEmpty {
+            if numbersStack.count > 1 {
+                if let firstNumber = Double(numbersStack.removeLast()) {
+                    let operation = operationsStack.removeLast()
+                    currentCalculation = IntermediateCalculation(firstNumber: firstNumber, operation: operation)
+                    if let secondNumber = Double(numbersStack.removeLast()) {
+                        result = performTwoNumbersOperation(secondNumber: secondNumber)
+                    }
+                }
+            } else {
+                let operation = operationsStack.removeLast()
+                currentCalculation = IntermediateCalculation(firstNumber: result, operation: operation)
+                if let secondNumber = Double(numbersStack.removeLast()) {
+                    result = performTwoNumbersOperation(secondNumber: secondNumber)
+                }
+            }
+        }
+        
+        return result
+    }
+
 }

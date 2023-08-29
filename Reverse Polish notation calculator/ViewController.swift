@@ -87,26 +87,25 @@ class ViewController: UIViewController {
         
         cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.button0.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-        cView.buttonEquals.addTarget(self, action: #selector(calcButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonEquals.addTarget(self, action: #selector(equalsButtonPressed(_:)), for: .touchUpInside)
         cView.buttonBackspace.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
     }
     
     private var calculator = CalculatorLogic()
     @objc func calcButtonPressed(_ sender: UIButton) {
         //What should happen when an = button is pressed
-//        isFinishedTypingNumber = true
-//        calculator.setNumber(displayValue)
-//        
-//        if let calcMethod = sender.currentTitle {
-//            if calcMethod == "C" {
-////          buttonAC.setTitle("AC", for: .normal)
-//            }
-//            if let result = calculator.calculate(symbol: calcMethod) {
-//                displayValue = result
-//            }
-//        }
+        isFinishedTypingNumber = true
+        calculator.setline(cView.outputField.text!)
+        
+        if let result = calculator.theResult {
+            displayValue = result
+        }
     }
     
+    @objc func equalsButtonPressed(_ sender: UIButton) {
+        cView.outputField.text?.append("=")
+        calcButtonPressed(cView.buttonEquals)
+    }
             
     @objc func numButtonPressed(_ sender: UIButton) {
         //What should happen when a number is entered into the keypad
@@ -148,7 +147,6 @@ class ViewController: UIViewController {
                     displayValue = Double(0)
                     isFinishedTypingNumber = false
                 } else {
-                    print (isFinishedTypingNumber)
                     cView.outputField.text?.append(numValue)
                 }
             }
