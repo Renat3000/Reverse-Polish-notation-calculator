@@ -9,15 +9,17 @@ import Foundation
 
 struct CalculatorLogic {
     var inputline: String?
-//    var numbersStack = stackForNumbers()
-//    var operationsStack = stackForOperations()
     var numbersStack = [String]()
     var operationsStack = [String]()
     var operations = "+-×÷="
     var prioritiesDictionary: [String:Int] = ["+":1,"-":1,"×":2,"÷":2]
     var currentNumber = ""
     var theResult: Double?
-
+    
+    var highestPrioritySymbol: String?
+    var highestPriority = 0
+    var highestPrioritySymbolStep = 0
+    
     mutating func setline(_ inputline: String) {
         self.inputline = inputline
         print("tis nothing but a \(inputline)")
@@ -60,15 +62,43 @@ struct CalculatorLogic {
         return 0
     }
     
+    mutating func currentHighestSymbolStep() -> Int {
+        if operationsStack.count == 1 {
+            highestPrioritySymbolStep = 0
+        } else {
+            for (index, symbol) in operationsStack.enumerated() {
+                if let priority = prioritiesDictionary[symbol], priority > highestPriority {
+                    highestPrioritySymbolStep = index
+                    highestPrioritySymbol = symbol
+                    highestPriority = priority
+                }
+            }
+        }
+        return highestPrioritySymbolStep
+    }
+    
     mutating func calculate(numbersStack: [String], operationsStack: [String]) -> Double {
-        var numbersStack = numbersStack // Create a mutable copy
-        var operationsStack = operationsStack // Create a mutable copy
-        var result = Double(numbersStack.removeFirst()) ?? 0 // Initialize result with a default value
-        while !numbersStack.isEmpty {
-                let operation = operationsStack.removeFirst()
-                currentCalculation = IntermediateCalculation(firstNumber: result, operation: operation)
-                if let secondNumber = Double(numbersStack.removeFirst()) {
-                    result = performTwoNumbersOperation(secondNumber: secondNumber)
+        var numStack = numbersStack
+        var opStack = operationsStack
+        var result = 0.0
+        
+        while numbersStack.count > 1 {
+            
+            let currentstep = currentHighestSymbolStep()
+            if opStack.count == 1 {
+                let operation = opStack.removeLast()
+                let n2 = Double(numStack.remove(at: 1))
+                let n1 = Double(numStack.remove(at: 0))
+                currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
+                result = performTwoNumbersOperation(secondNumber: n2!)
+                return Double(result)
+            } else {
+                let operation = opStack.remove(at: currentstep)
+                let n2 = Double(numStack.remove(at: currentstep + 1))
+                let n1 = Double(numStack.remove(at: currentstep))
+                currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
+                result = performTwoNumbersOperation(secondNumber: n2!)
+                numStack.append(String(result))
             }
         }
         
