@@ -63,42 +63,45 @@ struct CalculatorLogic {
     }
     
     mutating func currentHighestSymbolStep() -> Int {
-        if operationsStack.count == 1 {
-            highestPrioritySymbolStep = 0
-        } else {
-            for (index, symbol) in operationsStack.enumerated() {
-                if let priority = prioritiesDictionary[symbol], priority > highestPriority {
-                    highestPrioritySymbolStep = index
-                    highestPrioritySymbol = symbol
-                    highestPriority = priority
-                }
+        highestPrioritySymbolStep = -1
+        highestPrioritySymbol = ""
+        highestPriority = 0
+        
+        for (index, symbol) in operationsStack.enumerated() {
+            if let priority = prioritiesDictionary[symbol], priority > highestPriority {
+                highestPrioritySymbolStep = index
+                highestPrioritySymbol = symbol
+                highestPriority = priority
             }
         }
         return highestPrioritySymbolStep
     }
+
     
     mutating func calculate(numbersStack: [String], operationsStack: [String]) -> Double {
-        var numStack = numbersStack
-        var opStack = operationsStack
+//        var numStack = numbersStack
+//        var opStack = operationsStack
         var result = 0.0
         
         while numbersStack.count > 1 {
+            print("current numbersStack:", self.numbersStack)
+            print("current operationsStack:",self.operationsStack)
             
             let currentstep = currentHighestSymbolStep()
-            if opStack.count == 1 {
-                let operation = opStack.removeLast()
-                let n2 = Double(numStack.remove(at: 1))
-                let n1 = Double(numStack.remove(at: 0))
+            if self.operationsStack.count == 1 {
+                let operation = self.operationsStack.removeLast()
+                let n2 = Double(self.numbersStack.remove(at: 1))
+                let n1 = Double(self.numbersStack.remove(at: 0))
                 currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
                 result = performTwoNumbersOperation(secondNumber: n2!)
                 return Double(result)
             } else {
-                let operation = opStack.remove(at: currentstep)
-                let n2 = Double(numStack.remove(at: currentstep + 1))
-                let n1 = Double(numStack.remove(at: currentstep))
+                let operation = self.operationsStack.remove(at: currentstep)
+                let n2 = Double(self.numbersStack.remove(at: currentstep + 1))
+                let n1 = Double(self.numbersStack.remove(at: currentstep))
                 currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
                 result = performTwoNumbersOperation(secondNumber: n2!)
-                numStack.append(String(result))
+                self.numbersStack.insert(String(result), at: currentstep)
             }
         }
         
