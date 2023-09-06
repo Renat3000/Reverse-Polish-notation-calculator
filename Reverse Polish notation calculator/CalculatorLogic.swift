@@ -9,103 +9,117 @@ import Foundation
 
 struct CalculatorLogic {
     var inputline: String?
-    var numbersStack = [String]()
-    var operationsStack = [String]()
-    var operations = "+-×÷="
-    var prioritiesDictionary: [String:Int] = ["+":1,"-":1,"×":2,"÷":2]
-    var currentNumber = ""
     var theResult: Double?
     
-    var highestPrioritySymbol: String?
-    var highestPriority = 0
-    var highestPrioritySymbolStep = 0
-    
     mutating func setline(_ inputline: String) {
-        self.inputline = inputline
-        print("tis nothing but a \(inputline)")
-        for char in inputline {
-                if !operations.contains(char) {
-                    currentNumber.append(char)
-                } else {
-                    numbersStack.append(currentNumber)
-                    currentNumber = ""
-                    operationsStack.append(String(char))
+        var line = inputline
+//        print(line)
+        var rpn = convertToRPN(&line)
+        theResult = evaluateRPN(rpn)
+    }
+    
+    func convertToRPN(_ line: inout String) -> [String] {
+        var prioritiesDictionary: [String:Int] = ["+": 1, "-": 1, "×": 2, "÷": 2, "(": 3, ")": 3]
+        var currentOperator = String()
+        var operationsStack = [String]()
+        var outputStack = [String]()
+        var numberString = String()
+        var dumpStack = [String]()
+
+        func getPriority(forOperator operatorSymbol: String) -> Int? {
+            return prioritiesDictionary[operatorSymbol]
+        }
+        
+        while !line.isEmpty {
+            let char = line.removeFirst()
+            
+            switch char {
+            case "0"..."9":
+                numberString.append(char)
+
+            case "+", "-", "×", "/":
+                if !numberString.isEmpty {
+                    outputStack.append(numberString)
+                    numberString = String()
+                }
+
+                currentOperator = String(char)
+                if !operationsStack.isEmpty {
+                    if let previousOpPriority = getPriority(forOperator: operationsStack.last!) {
+                        if let currentOpPriority = getPriority(forOperator: currentOperator) {
+                            if currentOpPriority <=  previousOpPriority  {
+                                if previousOpPriority == 3 {
+    // print("there's the comparison which involves ( or ), so operationsStack is", operationsStack)
+                                    operationsStack.append(currentOperator)
+                                     continue
+                                } else {
+                                    let operation = operationsStack.removeLast()
+                                    outputStack.append(operation)
+                                }
+                            }
+                        }
+                    }
+                }
+                operationsStack.append(currentOperator)
+            case "(":
+                operationsStack.append(String(char))
+                
+            case ")":
+                if !numberString.isEmpty {
+                    outputStack.append(numberString)
+                    numberString = String()
+                }
+
+                    while operationsStack.last != "(" {
+                        outputStack.append(operationsStack.removeLast())
+                    }
+
+                    if operationsStack.last == "(" {
+                        dumpStack.append(operationsStack.removeLast())
+                    }
+                
+            default:
+                continue
+            }
+        }
+        
+        if !numberString.isEmpty {
+            outputStack.append(numberString)
+        }
+        
+        while !operationsStack.isEmpty {
+            let operation = operationsStack.removeLast()
+            if operation != "(" {
+                outputStack.append(operation)
+            } else {
+                dumpStack.append(operation)
+            }
+        }
+        return outputStack
+    }
+
+    func evaluateRPN(_ line: [String]) -> Double {
+        var numbersStack = [Double]()
+        
+        for i in line {
+            if let number = Double(i) {
+                numbersStack.append(number)
+            } else {
+                if numbersStack.count >= 2 {
+                    let operand2 = numbersStack.removeLast()
+                    let operand1 = numbersStack.removeLast()
+                    if i == "+" {
+                        numbersStack.append(operand1 + operand2)
+                    } else if i == "-" {
+                        numbersStack.append(operand1 - operand2)
+                    } else if i == "×" {
+                        numbersStack.append(operand1 * operand2)
+                    } else if i == "÷" {
+                        numbersStack.append(operand1 / operand2)
+                    }
                 }
             }
-        print(numbersStack)
-        print(operationsStack)
-        operationsStack.removeLast() // delete the "="
-        theResult = calculate(numbersStack: numbersStack, operationsStack: operationsStack)
-        numbersStack.removeAll()
-        operationsStack.removeAll()
-    }
-    
-    struct IntermediateCalculation {
-        let firstNumber: Double
-        let operation: String
-    }
-    var currentCalculation: IntermediateCalculation?
-    
-    mutating func performTwoNumbersOperation(secondNumber: Double) -> Double {
-        if let calculation = currentCalculation {
-            let firstNumber = calculation.firstNumber
-            let operation = calculation.operation
-            
-            switch operation {
-            case "+": return firstNumber + secondNumber
-            case "-": return firstNumber - secondNumber
-            case "×": return firstNumber * secondNumber
-            case "÷": return firstNumber / secondNumber
-            default: fatalError("Invalid operation: \(operation)")
-            }
         }
-        return 0
+        return numbersStack.first ?? 0.0
     }
-    
-    mutating func currentHighestSymbolStep() -> Int {
-        highestPrioritySymbolStep = -1
-        highestPrioritySymbol = ""
-        highestPriority = 0
-        
-        for (index, symbol) in operationsStack.enumerated() {
-            if let priority = prioritiesDictionary[symbol], priority > highestPriority {
-                highestPrioritySymbolStep = index
-                highestPrioritySymbol = symbol
-                highestPriority = priority
-            }
-        }
-        return highestPrioritySymbolStep
-    }
-
-    
-    mutating func calculate(numbersStack: [String], operationsStack: [String]) -> Double {
-//        var numStack = numbersStack
-//        var opStack = operationsStack
-        var result = 0.0
-        
-        while numbersStack.count > 1 {
-            print("current numbersStack:", self.numbersStack)
-            print("current operationsStack:",self.operationsStack)
-            
-            let currentstep = currentHighestSymbolStep()
-            if self.operationsStack.count == 1 {
-                let operation = self.operationsStack.removeLast()
-                let n2 = Double(self.numbersStack.remove(at: 1))
-                let n1 = Double(self.numbersStack.remove(at: 0))
-                currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
-                result = performTwoNumbersOperation(secondNumber: n2!)
-                return Double(result)
-            } else {
-                let operation = self.operationsStack.remove(at: currentstep)
-                let n2 = Double(self.numbersStack.remove(at: currentstep + 1))
-                let n1 = Double(self.numbersStack.remove(at: currentstep))
-                currentCalculation = IntermediateCalculation(firstNumber: n1!, operation: operation)
-                result = performTwoNumbersOperation(secondNumber: n2!)
-                self.numbersStack.insert(String(result), at: currentstep)
-            }
-        }
-        
-        return result
-    }
-
 }

@@ -103,7 +103,6 @@ class ViewController: UIViewController {
     }
     
     @objc func equalsButtonPressed(_ sender: UIButton) {
-        cView.outputField.text?.append("=")
         calcButtonPressed(cView.buttonEquals)
     }
             
