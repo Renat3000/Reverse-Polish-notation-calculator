@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE1C77C52AA8E5340005D0B2 /* Convert to RPN.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Convert to RPN.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CEEE08902A975ECC003155CA /* Reverse Polish notation calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reverse Polish notation calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEEE08932A975ECC003155CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEEE08972A975ECC003155CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +45,7 @@
 		CEEE08872A975ECB003155CA = {
 			isa = PBXGroup;
 			children = (
+				CE1C77C52AA8E5340005D0B2 /* Convert to RPN.playground */,
 				CEEE08922A975ECC003155CA /* Reverse Polish notation calculator */,
 				CEEE08912A975ECC003155CA /* Products */,
 			);
