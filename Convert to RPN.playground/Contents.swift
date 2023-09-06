@@ -1,9 +1,12 @@
+//  Created by Renat Nazyrov on 05.09.2023.
+//
+
 import Foundation
 
-var line = "20*((5+3)/4)"    // правильный ответ должен быть : 2 5 3+ 4/*
+var line = "20*((5+3)/4)"    // the answer is: 2 5 3 + 4 / *
 var line2 = "(((3+3*2)*0)+10)"
 func convertToRPN(_ line: inout String) -> [String] {
-    var prioritiesDictionary: [String:Int] = ["+": 1, "-": 1, "*": 2, "/": 2, "(": 3, ")": 3]
+    let prioritiesDictionary: [String:Int] = ["+": 1, "-": 1, "*": 2, "/": 2, "(": 3, ")": 3]
     var currentOperator = String()
     var operationsStack = [String]()
     var outputStack = [String]()
@@ -34,7 +37,7 @@ func convertToRPN(_ line: inout String) -> [String] {
                     if let currentOpPriority = getPriority(forOperator: currentOperator) {
                         if currentOpPriority <=  previousOpPriority  {
                             if previousOpPriority == 3 {
-//                                print("there's the comparison which involves ( or ), so operationsStack is", operationsStack)
+//  print("there's the comparison which involves "(" or ")", so operationsStack is", operationsStack)
                                 operationsStack.append(currentOperator)
                                  continue
                             } else {
@@ -54,16 +57,15 @@ func convertToRPN(_ line: inout String) -> [String] {
                 outputStack.append(numberString)
                 numberString = String()
             }
-//              If the token is a closing bracket:
-//             - Pop operators off the stack and append them to the output, until the operator at the top of the stack is a opening bracket.
+// If the token is a closing bracket:
+// - Pop operators off the stack and append them to the output, until the operator at the top of the stack is a opening bracket.
             
                 while operationsStack.last != "(" {
                     outputStack.append(operationsStack.removeLast())
                 }
-                // -    Pop the opening bracket off the stack.
+// - Pop the opening bracket off the stack.
                 if operationsStack.last == "(" {
                     dumpStack.append(operationsStack.removeLast())
-//                    print("outputStack is", outputStack, "operationsStack:", operationsStack)
                 }
             
         default:
@@ -81,10 +83,8 @@ func convertToRPN(_ line: inout String) -> [String] {
             outputStack.append(operation)
         } else {
             dumpStack.append(operation)
-//            print("dumpStack is", dumpStack)
         }
     }
-//    print(outputStack.joined(separator: " "))
     result = outputStack
     return result
 }
@@ -111,13 +111,8 @@ func evaluateRPN(_ line: [String]) -> Double {
             }
         }
     }
-    print(numbersStack.first ?? 0.0)
     return numbersStack.first ?? 0.0
 }
 
-
 var LineRPNStack = convertToRPN(&line)
 evaluateRPN(LineRPNStack)
-
-var LineRPNStack2 = convertToRPN(&line2)
-evaluateRPN(LineRPNStack2)

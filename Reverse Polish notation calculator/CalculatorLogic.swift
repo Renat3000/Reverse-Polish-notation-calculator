@@ -14,12 +14,12 @@ struct CalculatorLogic {
     mutating func setline(_ inputline: String) {
         var line = inputline
 //        print(line)
-        var rpn = convertToRPN(&line)
+        let rpn = convertToRPN(&line)
         theResult = evaluateRPN(rpn)
     }
     
     func convertToRPN(_ line: inout String) -> [String] {
-        var prioritiesDictionary: [String:Int] = ["+": 1, "-": 1, "×": 2, "÷": 2, "(": 3, ")": 3]
+        let prioritiesDictionary: [String:Int] = ["+": 1, "-": 1, "×": 2, "÷": 2, "(": 3, ")": 3]
         var currentOperator = String()
         var operationsStack = [String]()
         var outputStack = [String]()
