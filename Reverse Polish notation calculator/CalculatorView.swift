@@ -105,7 +105,7 @@ class CalculatorView: UIView {
         buttonBackspace = makeButton(withText: "←")
         
         fourthStack.addArrangedSubview(button0)
-//        fourthStack.addArrangedSubview(buttonComma)
+        fourthStack.addArrangedSubview(buttonComma)
         fourthStack.addArrangedSubview(buttonBackspace)
         fourthStack.addArrangedSubview(buttonEquals)
         addSubview(fourthStack)

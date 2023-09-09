@@ -36,7 +36,10 @@ struct CalculatorLogic {
             switch char {
             case "0"..."9":
                 numberString.append(char)
-
+                
+            case ".":
+                numberString.append(char)
+                
             case "+", "-", "×", "/":
                 if !numberString.isEmpty {
                     outputStack.append(numberString)

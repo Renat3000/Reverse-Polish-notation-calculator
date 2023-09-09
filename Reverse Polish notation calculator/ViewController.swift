@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         cView.button3.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonPlus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         
-        cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside) // doesn't work
+        cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.button0.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonEquals.addTarget(self, action: #selector(calcButtonPressed(_:)), for: .touchUpInside)
         cView.buttonBackspace.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
@@ -94,7 +94,6 @@ class ViewController: UIViewController {
     private var calculator = CalculatorLogic()
     @objc func calcButtonPressed(_ sender: UIButton) {
         //What should happen when "=" button is pressed
-        isFinishedTypingNumber = true
         calculator.setline(cView.outputField.text!)
         
         if let result = calculator.theResult {
@@ -103,45 +102,21 @@ class ViewController: UIViewController {
     }
     
     @objc func acButtonPressed(_ sender: UIButton) {
-        isFinishedTypingNumber = false
         displayValue = Double(0)
     }
     
     @objc func numButtonPressed(_ sender: UIButton) {
         //What should happen when a number is entered into the keypad
         if let numValue = sender.currentTitle {
-            if isFinishedTypingNumber == true {
-                if numValue == "←" {
-                    if cView.outputField.text!.count > 1 {
-                        cView.outputField.text?.removeLast()
-                    } else {
-                        displayValue = Double(0)
-                    }
-                    
+            if numValue == "←" {
+                if cView.outputField.text!.count > 1 {
+                    cView.outputField.text?.removeLast()
                 } else {
-                    cView.outputField.text = numValue
-                    isFinishedTypingNumber = false
+                    displayValue = Double(0)
                 }
             } else {
-                if numValue == "←" {
-                    
-                    if cView.outputField.text!.count > 1 {
-                        cView.outputField.text?.removeLast()
-                    } else {
-                        displayValue = Double(0)
-                        isFinishedTypingNumber = true
-                    }
-                } else if numValue == "." { // more than one "." fix
-                    if displayValue == 0 {
-                        cView.outputField.text = "0."
-                        isFinishedTypingNumber = false
-                        return
-                    }
-                    let isInt = !cView.outputField.text!.contains(".")
-                    if !isInt { return }
-                } else if cView.outputField.text == "0" || isFinishedTypingNumber {
+                if cView.outputField.text == "0" {
                     cView.outputField.text = numValue
-                    isFinishedTypingNumber = false
                 } else {
                     cView.outputField.text?.append(numValue)
                 }
