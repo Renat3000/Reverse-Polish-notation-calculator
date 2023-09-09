@@ -66,9 +66,9 @@ class ViewController: UIViewController {
         cView.buttonAC.addTarget(self, action: #selector(acButtonPressed(_:)), for: .touchUpInside)
         cView.buttonOpeningBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonClosingBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-        cView.buttonSign.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-        cView.buttonPercentage.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-        cView.buttonDivision.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+//        cView.buttonSign.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside) // isn't used
+//        cView.buttonPercentage.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside) // isn't used
+        cView.buttonDivision.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside) 
         
         cView.buttonMultiplication.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.button7.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
@@ -85,25 +85,21 @@ class ViewController: UIViewController {
         cView.button3.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonPlus.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         
-        cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonComma.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside) // doesn't work
         cView.button0.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
-        cView.buttonEquals.addTarget(self, action: #selector(equalsButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonEquals.addTarget(self, action: #selector(calcButtonPressed(_:)), for: .touchUpInside)
         cView.buttonBackspace.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
     }
     
     private var calculator = CalculatorLogic()
     @objc func calcButtonPressed(_ sender: UIButton) {
-        //What should happen when an = button is pressed
+        //What should happen when "=" button is pressed
         isFinishedTypingNumber = true
         calculator.setline(cView.outputField.text!)
         
         if let result = calculator.theResult {
             displayValue = result
         }
-    }
-    
-    @objc func equalsButtonPressed(_ sender: UIButton) {
-        calcButtonPressed(cView.buttonEquals)
     }
     
     @objc func acButtonPressed(_ sender: UIButton) {
@@ -146,13 +142,7 @@ class ViewController: UIViewController {
                 } else if cView.outputField.text == "0" || isFinishedTypingNumber {
                     cView.outputField.text = numValue
                     isFinishedTypingNumber = false
-                }
-//                else if numValue == "AC" {
-//                    cView.outputField.text = ""
-//                    displayValue = Double(0)
-//                    isFinishedTypingNumber = false
-//                }
-            else {
+                } else {
                     cView.outputField.text?.append(numValue)
                 }
             }
