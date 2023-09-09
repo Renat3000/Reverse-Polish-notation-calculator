@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     }
     
     func setupButtonActions() {
-        cView.buttonAC.addTarget(self, action: #selector(ViewController.numButtonPressed(_:)), for: .touchUpInside)
+        cView.buttonAC.addTarget(self, action: #selector(acButtonPressed(_:)), for: .touchUpInside)
         cView.buttonOpeningBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonClosingBracket.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
         cView.buttonSign.addTarget(self, action: #selector(numButtonPressed(_:)), for: .touchUpInside)
@@ -105,7 +105,12 @@ class ViewController: UIViewController {
     @objc func equalsButtonPressed(_ sender: UIButton) {
         calcButtonPressed(cView.buttonEquals)
     }
-            
+    
+    @objc func acButtonPressed(_ sender: UIButton) {
+        isFinishedTypingNumber = false
+        displayValue = Double(0)
+    }
+    
     @objc func numButtonPressed(_ sender: UIButton) {
         //What should happen when a number is entered into the keypad
         if let numValue = sender.currentTitle {
@@ -141,11 +146,13 @@ class ViewController: UIViewController {
                 } else if cView.outputField.text == "0" || isFinishedTypingNumber {
                     cView.outputField.text = numValue
                     isFinishedTypingNumber = false
-                }  else if numValue == "AC" {
-                    cView.outputField.text = " "
-                    displayValue = Double(0)
-                    isFinishedTypingNumber = false
-                } else {
+                }
+//                else if numValue == "AC" {
+//                    cView.outputField.text = ""
+//                    displayValue = Double(0)
+//                    isFinishedTypingNumber = false
+//                }
+            else {
                     cView.outputField.text?.append(numValue)
                 }
             }
